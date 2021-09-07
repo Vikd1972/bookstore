@@ -1,5 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
+
+export let userFirstName = "";
+export let userLastName = "";
+export let userEmail = "";
+
+function Аuthorization() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  return (
+    <Forms>
+      <h3>Аuthorization</h3>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          axios
+            .post("http://localhost:3001/api/user/login", {
+              email: email,
+              password: password,
+            })
+            .then((r) => {
+              userFirstName = r.data.firstName;
+              userLastName = r.data.lastName;
+              userEmail = r.data.email;
+                          console.log("List", r.data);
+            });
+        }}
+      >
+        <Lebel>
+          Email:
+          <input
+            className="input_forms"
+            type="email"
+            name="email"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            value={email}
+          />
+        </Lebel>
+        <Lebel>
+          Password:
+          <input
+            className="input_forms"
+            type="password"
+            name="password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            value={password}
+          />
+        </Lebel>
+
+        <Lebel>
+          <button className="input_forms" type="submit">
+            Send
+          </button>
+        </Lebel>
+      </form>
+    </Forms>
+  );
+}
 
 const Forms = styled.div`
   display: flex;
@@ -22,32 +86,5 @@ const Lebel = styled.div`
     box-sizing: border-box;
   }
 `;
-
-function Аuthorization() {
-  return (
-    <Forms>
-      <h3>Аuthorization</h3>
-
-      <form className="fields">
-        <Lebel>
-          Email:
-          <br />
-          <input className="input_forms" type="email" name="email" />
-        </Lebel>
-        <br />
-        <Lebel>
-          Password:
-          <br />
-          <input className="input_forms" type="password" name="password" />
-        </Lebel>
-        <br />
-        <br />
-        <Lebel>
-          <input className="input_forms" type="submit" value="Send" />
-        </Lebel>
-      </form>
-    </Forms>
-  );
-}
 
 export default Аuthorization;

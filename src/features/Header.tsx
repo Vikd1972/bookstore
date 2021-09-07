@@ -6,29 +6,17 @@ import UserProfile from "./UserProfile";
 import Books from "./Books";
 import Favourites from "./Favourites";
 import Login from "./Login/Login";
-
-const Heading = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  width: 800px;
-`;
-
-const Links = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  min-height: 30px;
-  background-color: #cccccc;
-  line-height: 27px;
-`;
-
-const Main = styled.div`
-  display: block;
-`;
+import { userEmail } from "./Login/Аuthorization";
 
 function Header() {
+  let IdCircle;
+
+  if (userEmail === "") {
+    IdCircle = <IdCircleFalse></IdCircleFalse>;
+  } else {
+    IdCircle = <IdCircleTrue></IdCircleTrue>;
+  }
+
   return (
     <Router>
       <Heading>
@@ -42,9 +30,10 @@ function Header() {
           <div>
             <Link to="/favourites">Favourites</Link>
           </div>
-          <div>
+          <Item>
             <Link to="/login">Login</Link>
-          </div>
+            {IdCircle}
+          </Item>
         </Links>
 
         <Main>
@@ -67,5 +56,43 @@ function Header() {
     </Router>
   );
 }
+
+const Heading = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  width: 800px;
+`;
+
+const Links = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  min-height: 30px;
+  background-color: #cccccc;
+  line-height: 27px;
+`;
+
+const Main = styled.div`
+  display: block;
+`;
+
+const Item = styled.div`
+  display: flex;
+`;
+
+const IdCircleFalse = styled.div`
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  margin: 10px 0 0 10px;
+`;
+
+const IdCircleTrue = styled(IdCircleFalse)`
+  background-color: #00ff00;
+`;
 
 export default Header;

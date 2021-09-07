@@ -1,3 +1,5 @@
+
+
 const express = require("express");
 const crypto = require("crypto");
 const bodyParser = require("body-parser");
@@ -14,6 +16,7 @@ app.post("/", urlencodedParser, async (req, res) => {
 
     const { firstName, lastName, email } = req.body;
     const password = req.body.password;
+    console.log(firstName);
     const userHash = crypto
       .pbkdf2Sync(password, email, 1000, 64, `sha512`)
       .toString(`hex`);
@@ -26,7 +29,7 @@ app.post("/", urlencodedParser, async (req, res) => {
       createdAt: new Date(),
       updatedAt: new Date(),
     });
-
+    res.send("user added");
   } catch (e) {
     console.log(e);
     res.status(401).json({
